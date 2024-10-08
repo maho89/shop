@@ -7,6 +7,7 @@ const router = useRouter();
 import {inject, ref, watch} from 'vue';
 import ImgField from "@/components/imgField.vue";
 import Cell from "@/components/Cell.vue";
+import Barcode from "@/components/Barcode.vue";
 const props = defineProps(['fields','items','name','add','edit','to','parent','parentId','tab','label','itemClick']);
 let itemClick = props.itemClick;
 if (!itemClick){
@@ -162,7 +163,8 @@ init_parent();
   <div class="d-flex flex-column h-100">
     <v-toolbar density="compact" :title="props.label">
       <v-spacer></v-spacer>
-      <v-text-field v-model="search.text.value"   append-inner-icon="mdi-magnify" density="compact" label="ძებნა"  variant="solo"  hide-details  single-line></v-text-field>
+      <!--v-text-field v-model="search.text.value"   append-inner-icon="mdi-magnify" density="compact" label="ძებნა"  variant="solo"  hide-details  single-line></v-text-field-->
+      <Barcode v-model="search.text.value" />
       <v-btn v-if="mode=='list'" icon="mdi-table" @click="mode='table'" variant="plain"></v-btn>
       <v-btn v-else icon="mdi-format-list-bulleted" @click="mode='list'" variant="plain"></v-btn>
       <v-btn v-if="props.add" icon="mdi-playlist-plus" :to="{query:getQuery({[`${props.name}Edit`]: 0 })}" variant="plain"></v-btn>

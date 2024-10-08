@@ -14,7 +14,7 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <v-app-bar density="compact" :elevation="1">
+  <v-app-bar density="compact" :elevation="1" >
     <v-btn icon="mdi-apps" @click="$menuOpen.value=!$menuOpen.value" />
     <v-spacer></v-spacer>
     <v-btn @click="toggleTheme()" :key="theme.global.name" :icon="theme.global.name.value!='dark'?'mdi-white-balance-sunny':'mdi-weather-night'"/>
