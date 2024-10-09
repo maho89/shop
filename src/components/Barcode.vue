@@ -24,9 +24,7 @@ const onResult = () => {
 <v-btn/>
   <v-btn @click="dlg=!dlg">სკანერი</v-btn>
   <v-dialog v-model="dlg">
-  <span>
-    --{{data}}--
-  </span>
+
    <span>
     --{{load}}--
   </span>
@@ -51,5 +49,8 @@ const onResult = () => {
     :device-index="data.deviceIndex"
     :ms-between-decoding="500"
   />
+    <span>
+    --{{data}}--
+  </span>
   </v-dialog>
 </template>
