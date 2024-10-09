@@ -163,8 +163,11 @@ init_parent();
   <div class="d-flex flex-column h-100">
     <v-toolbar density="compact" :title="props.label">
       <v-spacer></v-spacer>
-      <!--v-text-field v-model="search.text.value"   append-inner-icon="mdi-magnify" density="compact" label="ძებნა"  variant="solo"  hide-details  single-line></v-text-field-->
-      <Barcode v-model="search.text.value" />
+      <v-text-field v-model="search.text.value"  density="compact" label="ძებნა"  variant="solo"  hide-details  single-line>
+        <template v-slot:append-inner>
+          <Barcode v-model="search.text.value" />
+        </template>
+      </v-text-field>
       <v-btn v-if="mode=='list'" icon="mdi-table" @click="mode='table'" variant="plain"></v-btn>
       <v-btn v-else icon="mdi-format-list-bulleted" @click="mode='list'" variant="plain"></v-btn>
       <v-btn v-if="props.add" icon="mdi-playlist-plus" :to="{query:getQuery({[`${props.name}Edit`]: 0 })}" variant="plain"></v-btn>

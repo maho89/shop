@@ -4,27 +4,27 @@ import { StreamBarcodeReader } from '@teckel/vue-barcode-reader'
 import {ref} from "vue";
 let model = defineModel();
 let dlg = ref(false)
-let load = ref(false);
+let load = ref('');
 let data = ref({});
 const barcodeScannedAudio = new Audio('./assets/barcode-scanned.mp3')
 const onDecode = (result) => {
-  barcodeScannedAudio.play()
-  model = result
+  model = result;
+  barcodeScannedAudio.play();
 }
 
 const onLoaded = () => {
   load.value='loaded'
 }
-const onResult = () => {
-  load.value='onResult'
+const onResult = (result) => {
+  model = result;
+  load.value='onResult';
 }
 </script>
 
 <template>
 <v-btn/>
-  <v-btn @click="dlg=!dlg">სკანერი</v-btn>
+  <v-btn @click="dlg=!dlg" icon="mdi-barcode" variant="plain" position="absolute"/>
   <v-dialog v-model="dlg">
-
    <span>
     --{{load}}--
   </span>

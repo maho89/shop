@@ -7,6 +7,7 @@ import ViteFonts from 'unplugin-fonts/vite'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import {viteStaticCopy} from "vite-plugin-static-copy";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,6 +20,14 @@ export default defineConfig({
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify(),
     Components(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/assets/barcode-scanned.mp3',
+          dest: 'assets'
+        }
+      ]
+    }),
     ViteFonts({
       google: {
         families: [{
