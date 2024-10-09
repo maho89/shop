@@ -12,10 +12,10 @@ import object from '@/pages/object/index.vue';
 import Dexie from "dexie";
 const vuetify = createVuetify({ theme: {  defaultTheme: 'dark' }});
 const routes = [
-  {path: '/',  name:'home', redirect: '/products'},
-  {path: '/objects', name:'object', component: object},
-  {path: '/products', name:'product', component: product},
-  {path: '/salary', name:'salary', component: salary}
+  {path: '/',  name:'home', redirect: '/shop/products'},
+  {path: '/shop/objects', name:'object', component: object},
+  {path: '/shop/products', name:'product', component: product},
+  {path: '/shop/salary', name:'salary', component: salary}
 ];
 const router = createRouter({ history: createWebHistory(),routes});
 const db = new Dexie('shop');

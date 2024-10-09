@@ -5,9 +5,9 @@
       v-model="$menuOpen.value"
       temporary>
       <v-list density="compact">
-        <v-list-item to="/products" prepend-icon="mdi-home"   title="მთავარი"  link />
-        <v-list-item to="/objects" prepend-icon="mdi-home"   title="ობიექტები"  link />
-        <v-list-item to="/salary" prepend-icon="mdi-home"   title="სალარო"  link />
+        <v-list-item to="/shop/products" prepend-icon="mdi-home"   title="მთავარი"  link />
+        <v-list-item to="/shop/objects" prepend-icon="mdi-home"   title="ობიექტები"  link />
+        <v-list-item to="/shop/salary" prepend-icon="mdi-home"   title="სალარო"  link />
       </v-list>
     </v-navigation-drawer>
   </template>
@@ -16,9 +16,9 @@
       :rail="!$menuOpen.value"
       app>
       <v-list density="compact">
-        <v-list-item to="/products" prepend-icon="mdi-home"   title="მთავარი"  link />
-        <v-list-item to="/objects" prepend-icon="mdi-home"   title="ობიექტები"  link />
-        <v-list-item to="/salary" prepend-icon="mdi-home"   title="სალარო"  link />
+        <v-list-item to="/shop/products" prepend-icon="mdi-home"   title="მთავარი"  link />
+        <v-list-item to="/shop/objects" prepend-icon="mdi-home"   title="ობიექტები"  link />
+        <v-list-item to="/shop/salary" prepend-icon="mdi-home"   title="სალარო"  link />
       </v-list>
     </v-navigation-drawer>
   </template>
