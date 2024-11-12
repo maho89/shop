@@ -11,21 +11,11 @@ const data  = {
     {key:'id',type: 'hidden', hidden: true},
     {key:'photo', type: 'photo', required:true, label:'ფოტო'},
     {key:'name', required:true, label:'დასახელება'},
-    {key: 'count', label: 'რაოდენობა', type: 'calc',act:(id,model)=>{
-        if (id>0){
-            db.item.where('product_id').equals(Number(id))
-          //db.item.where('object_id').equals(Number(salary.object.value))
-            .and(item => item.object_id == salary.object.value)
-
-            .toArray().then(items=>{
-            model.value = items.reduce((total, item) => total + item.count*1, 0);
-          })
-        }
-    }}
+    {key: 'count', label: 'რაოდენობა'},
   ],
-
   items: ref([]),
 };
+let isMobile = ref(false);
 let salary = {
   save:()=>{
     let table = db.salary;
@@ -82,7 +72,7 @@ let salary = {
       {key:'date', label:'დრო', type:'dateTime'},
       {key:'salary', label:'თანხა'},
   ],
-  object:ref(null),
+  object:ref(localStorage.getItem("object")),
   sum:()=>{
     if(salary.items.value.length==0) return 0;
     let sum = 0;
@@ -103,63 +93,58 @@ function init(){
     });
   }
 }
+function checkMobile() {
+  isMobile = window.innerWidth < 600;
+  window.addEventListener('resize', checkMobile);
+}
+checkMobile();
 init();
 watch(() => route.query.salaryId, () => {
   init();
 }, { immediate: true })
 </script>
 <template>
-  <div style="display: flex; height: calc(100% - 10px); position: relative; gap: 5px;" class="ma-1">
-    <v-card style="display: grid;width: 600px;align-content: space-between;" >
-      <v-card>
-          <v-toolbar density="compact">
-            <Sel label="ობიექტი" name="object" class="ma-2" v-model="salary.object.value" hide-details variant="outlined" density="compact"/>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </v-toolbar>
-          <v-list density="compact">
-            <v-list-item v-for="item in salary.items.value">
-              <template v-slot:prepend>
-                <v-avatar :key="item.key" :image="item.photo" icon="mdi-image"></v-avatar>
-              </template>
-              {{item.name}}
-              <template v-slot:append>
-                <v-number-input
-                  variant="outlined"
-                  controlVariant="split"
-                  v-model="item.count"
-                />
-              </template>
-            </v-list-item>
-            <v-list-item>
-              <template v-slot:append>
-                თანხა სულ: {{salary.sum()}}
-              </template>
-            </v-list-item>
-          </v-list>
-          <v-card-actions>
-            <v-btn @click="salary.save()">შენახვა</v-btn>
-          </v-card-actions>
-        </v-card>
-      <v-card>
-        <List
-          :fields="salary.fields"
-          name="salary"
-          to="salaryId"
-          label=""
-        />
-      </v-card>
+  <div style="display: flex; height: calc(100% - 10px); position: relative; gap: 5px;flex-wrap: wrap;" class="ma-1">
+    <v-card style="flex: 1; min-width: 500px;">
+      <v-toolbar density="compact">
+        <Sel label="ობიექტი" name="object" class="ma-2" v-model="salary.object.value" hide-details variant="outlined" density="compact"/>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-list density="compact">
+        <v-list-item v-for="item in salary.items.value">
+          <template v-slot:prepend>
+            <v-avatar :key="item.key" :image="item.photo" icon="mdi-image"></v-avatar>
+          </template>
+          {{item.name}}
+          <template v-slot:append>
+            <v-number-input
+              variant="outlined"
+              controlVariant="split"
+              v-model="item.count"
+            />
+          </template>
+        </v-list-item>
+        <v-list-item>
+          <template v-slot:append>
+            თანხა სულ: {{salary.sum()}}
+          </template>
+        </v-list-item>
+      </v-list>
+      <v-card-actions>
+        <v-btn @click="salary.save()">შენახვა</v-btn>
+      </v-card-actions>
     </v-card>
-    <v-card style="flex: 1">
-    <List
-      :key="salary.object.value"
-      :fields="data.fields"
-      name="product"
-      :itemClick="salary.add"
-      label="ობიექტები"
-    />
+    <v-card style="flex: 3; min-width: 500px;">
+      <List
+        :key="salary.object.value"
+        :fields="data.fields"
+        name="product"
+        :itemClick="salary.add"
+        label="ობიექტები"
+      />
     </v-card>
   </div>
 

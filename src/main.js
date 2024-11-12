@@ -12,10 +12,10 @@ import object from '@/pages/object/index.vue';
 import Dexie from "dexie";
 const vuetify = createVuetify({ theme: {  defaultTheme: 'dark' }});
 const routes = [
-  {path: '/',  name:'home', redirect: '/shop/products'},
-  {path: '/shop/objects', name:'object', component: object},
-  {path: '/shop/products', name:'product', component: product},
-  {path: '/shop/salary', name:'salary', component: salary}
+  {path: '/',  name:'home', redirect: '/salary'},
+  {path: '/objects', name:'object', component: object},
+  {path: '/products', name:'product', component: product},
+  {path: '/salary', name:'salary', component: salary}
 ];
 const router = createRouter({ history: createWebHistory(),routes});
 const db = new Dexie('shop');
@@ -28,6 +28,9 @@ db.version(4).stores( {
   item: '++id,product_id,object_id',
 });
 const app = createApp(App);
+navigator.serviceWorker.ready.then(registration => {
+  return registration.sync.register('api-data-sync');
+});
 app.provide('db', db);
 app.use(vuetify);
 app.use(Http);

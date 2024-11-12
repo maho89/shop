@@ -6,8 +6,8 @@ class Http {
     let token = localStorage.getItem("token");
     if (token) headers.set("Authorization", "Bearer "+token);
     this.options = {
-      credentials: "include",
-      method: "GET",
+   //   credentials: "include",
+      method: "POST",
       headers: headers
     };
   }
@@ -41,7 +41,7 @@ class Http {
   }
 
   resetOptions() {
-    this.options = {  method: "GET",credentials: 'include',  headers: headers };
+    this.options = {  method: "POST",  headers: headers };
   }
 }
 export default {

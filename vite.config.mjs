@@ -3,21 +3,54 @@ import Components from 'unplugin-vue-components/vite'
 import Vue from '@vitejs/plugin-vue'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import ViteFonts from 'unplugin-fonts/vite'
-
-// Utilities
+import { VitePWA } from 'vite-plugin-pwa'
+import mkCert from 'vite-plugin-mkcert';
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import {viteStaticCopy} from "vite-plugin-static-copy";
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/shop/',
   plugins: [
-
+     VitePWA({
+      includeAssets: ['logo.svg'],
+      registerType: 'autoUpdate',
+      manifest: {
+         name: 'My Awesome App',
+         short_name: 'AwesomeApp',
+         description: 'An awesome app built with Vue and Vite',
+         theme_color: '#ffffff',
+         icons: [
+           {
+             src: 'pwa-64x64.png',
+             sizes: '64x64',
+             type: 'image/png'
+           },
+           {
+             src: 'pwa-192x192.png',
+             sizes: '192x192',
+             type: 'image/png'
+           },
+           {
+             src: 'pwa-512x512.png',
+             sizes: '512x512',
+             type: 'image/png',
+             purpose: 'any'
+           },
+           {
+             src: 'maskable-icon-512x512.png',
+             sizes: '512x512',
+             type: 'image/png',
+             purpose: 'maskable'
+           }
+         ]
+       },
+      devOptions:{
+        enabled:true
+      },
+    }),
+  //  mkCert(),
     Vue({
       template: { transformAssetUrls }
     }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify(),
     Components(),
     viteStaticCopy({
@@ -53,6 +86,7 @@ export default defineConfig({
     ],
   },
   server: {
-    port: 3000,
+    host: '127.0.1.0',
+    port: 80,
   },
 })

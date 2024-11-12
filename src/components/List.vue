@@ -7,7 +7,7 @@ const router = useRouter();
 import {inject, ref, watch} from 'vue';
 import ImgField from "@/components/imgField.vue";
 import Cell from "@/components/Cell.vue";
-import Barcode from "@/components/Barcode.vue";
+import Barcode1 from "@/components/Barcode1.vue";
 const props = defineProps(['fields','items','name','add','edit','to','parent','parentId','tab','label','itemClick']);
 let itemClick = props.itemClick;
 if (!itemClick){
@@ -15,13 +15,13 @@ if (!itemClick){
 }
 let pagination = {
   page: ref(1),
-  pageSize: ref(14),
+  pageSize: ref(12),
   totalPage: ref(0),
   totalCount: ref(0),  // Total number of filtered items
 };
 function init_data() {
     let table = db[props.name];
-    let its = [];
+
     isLoading.value = true;
     if (props.parent && props.parentId) {
       table = table.where(props.parent).equals(Number(route.query[props.parentId]));
@@ -34,7 +34,7 @@ function init_data() {
       pagination.totalCount.value = count;
       pagination.totalPage.value = Math.ceil(count / pagination.pageSize.value);
     });
-    table = table.offset((pagination.page.value - 1) * pagination.pageSize.value);
+    table = table.offset((pagination.page.value - 1) * pagination.pageSize.value).limit(pagination.pageSize.value);
     if (sort.key.value !== undefined) {
       if (sort.desc.value) {
         table.reverse()
@@ -161,11 +161,16 @@ init_parent();
 </script>
 <template>
   <div class="d-flex flex-column h-100">
+    {{pagination}}
     <v-toolbar density="compact" :title="props.label">
       <v-spacer></v-spacer>
       <v-text-field v-model="search.text.value"  density="compact" label="ძებნა"  variant="solo"  hide-details  single-line>
         <template v-slot:append-inner>
-          <Barcode v-model="search.text.value" />
+          <div style="height: 30px; width: 50px; position: relative" >
+            <div style="position: absolute; top: -8px;">
+              <Barcode1  v-model="search.text.value" />
+            </div>
+          </div>
         </template>
       </v-text-field>
       <v-btn v-if="mode=='list'" icon="mdi-table" @click="mode='table'" variant="plain"></v-btn>

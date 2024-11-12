@@ -12,7 +12,7 @@ function login(){
     "user" : data.value.user,
     "password" : data.value.pass
   }
-  http.post('/Auth/Token/',p)
+  http.post('Auth/Token/',p)
       .then(data=>{
         if (data.status.code == 1){
           localStorage.setItem('user',JSON.stringify(data.data));
